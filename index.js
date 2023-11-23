@@ -103,8 +103,18 @@ function animate() {
   lasers.forEach((laser) => {
     laser.update();
   });
-  enemies.forEach((enemy) => {
+  enemies.forEach((enemy, index) => {
     enemy.update();
+    lasers.forEach((laser, laserIndex) => {
+      const distance = Math.hypot(laser.x - enemy.x, laser.y - enemy.y);
+
+      if (distance - enemy.radius - laser.radius < 1) {
+        setTimeout(() => {
+          enemies.splice(index, 1);
+          lasers.splice(laserIndex, 1);
+        }, 0);
+      }
+    });
   });
 }
 
