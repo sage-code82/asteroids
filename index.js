@@ -96,8 +96,9 @@ function spawn() {
   }, 1000);
 }
 
+let animationId;
 function animate() {
-  requestAnimationFrame(animate);
+  animationId = requestAnimationFrame(animate);
   context.clearRect(0, 0, canvas.width, canvas.height);
   player.draw();
   lasers.forEach((laser) => {
@@ -105,6 +106,12 @@ function animate() {
   });
   enemies.forEach((enemy, index) => {
     enemy.update();
+
+    const distance = Math.hypot(player.x - enemy.x, player.y - enemy.y);
+    if (distance - enemy.radius - player.radius < 1) {
+      cancelAnimationFrame(animationId);
+    }
+
     lasers.forEach((laser, laserIndex) => {
       const distance = Math.hypot(laser.x - enemy.x, laser.y - enemy.y);
 
