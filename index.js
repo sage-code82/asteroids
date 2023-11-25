@@ -7,6 +7,7 @@ canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
 const scoreEl = document.querySelector("#scoreEl");
+const newGameButton = document.querySelector("#scoreboard button");
 
 context.fillStyle = "black";
 context.fillRect(0, 0, canvas.width, canvas.height);
@@ -129,6 +130,30 @@ function spawn() {
   }, 1000);
 }
 
+function showGameOverModal() {
+  const modal = document.getElementById("ui");
+  const scoreElement = document
+    .getElementById("scoreboard")
+    .querySelector("h1");
+  scoreElement.textContent = `Final Score: ${score}`;
+  modal.style.display = "flex";
+  newGameButton.addEventListener("click", function () {
+    modal.style.display = "none";
+    resetGame();
+  });
+}
+
+function resetGame() {
+  player.x = canvas.width / 2;
+  player.y = canvas.height / 2;
+  score = 0;
+  scoreEl.textContent = score;
+  lasers.length = 0;
+  enemies.length = 0;
+  particles.length = 0;
+  animate();
+}
+
 let animationId;
 let score = 0;
 function animate() {
@@ -163,6 +188,7 @@ function animate() {
     const distance = Math.hypot(player.x - enemy.x, player.y - enemy.y);
     if (distance - enemy.radius - player.radius < 1) {
       cancelAnimationFrame(animationId);
+      showGameOverModal();
     }
 
     lasers.forEach((laser, laserIndex) => {
@@ -211,6 +237,8 @@ addEventListener("click", (event) => {
     new Laser(canvas.width / 2, canvas.height / 2, 5, "hotPink", velocity)
   );
 });
+
+addEventListener;
 
 animate();
 spawn();
