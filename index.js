@@ -8,6 +8,7 @@ canvas.height = window.innerHeight;
 
 const scoreEl = document.querySelector("#scoreEl");
 const newGameButton = document.querySelector("#scoreboard button");
+let spawnInterval;
 
 context.fillStyle = "black";
 context.fillRect(0, 0, canvas.width, canvas.height);
@@ -109,7 +110,8 @@ const enemies = [];
 const particles = [];
 
 function spawn() {
-  setInterval(() => {
+  clearInterval(spawnInterval);
+  spawnInterval = setInterval(() => {
     const radius = Math.random() * (30 - 4) + 4;
     let x;
     let y;
@@ -140,6 +142,8 @@ function showGameOverModal() {
   newGameButton.addEventListener("click", function () {
     modal.style.display = "none";
     resetGame();
+    clearInterval(spawnInterval);
+    spawnInterval = null;
   });
 }
 
@@ -151,7 +155,9 @@ function resetGame() {
   lasers.length = 0;
   enemies.length = 0;
   particles.length = 0;
+  cancelAnimationFrame(animationId);
   animate();
+  spawn();
 }
 
 let animationId;
@@ -237,8 +243,6 @@ addEventListener("click", (event) => {
     new Laser(canvas.width / 2, canvas.height / 2, 5, "hotPink", velocity)
   );
 });
-
-addEventListener;
 
 animate();
 spawn();
