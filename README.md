@@ -4,7 +4,8 @@ Instructions : Point and shoot with your mouse or a touch screen.
 
 ## Current State of the Game 05.12
 
-ITS WORKING! For now just a quick game but the building blocks for me to add to it as the year goes on
+ITS WORKING! For now just a quick game but the building blocks for me to add to it as the year goes on.
+If you do play this game then please do let me know any bugs you encounter
 
 ## Stretch Goals
 
