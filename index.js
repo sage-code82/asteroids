@@ -8,7 +8,6 @@ canvas.height = window.innerHeight;
 
 const scoreEl = document.querySelector("#scoreEl");
 const newGameButton = document.querySelector("#scoreboard button");
-let spawnInterval;
 
 context.fillStyle = "black";
 context.fillRect(0, 0, canvas.width, canvas.height);
@@ -108,6 +107,7 @@ const player = new Player(x, y, 15, "white");
 const lasers = [];
 const enemies = [];
 const particles = [];
+let spawnInterval;
 
 function spawn() {
   clearInterval(spawnInterval);
@@ -141,9 +141,10 @@ function showGameOverModal() {
   modal.style.display = "flex";
   newGameButton.addEventListener("click", function () {
     modal.style.display = "none";
+    cancelAnimationFrame(animationId);
     resetGame();
-    clearInterval(spawnInterval);
-    spawnInterval = null;
+    spawn();
+    animate();
   });
 }
 
@@ -155,9 +156,6 @@ function resetGame() {
   lasers.length = 0;
   enemies.length = 0;
   particles.length = 0;
-  cancelAnimationFrame(animationId);
-  animate();
-  spawn();
 }
 
 let animationId;
